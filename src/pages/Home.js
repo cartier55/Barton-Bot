@@ -34,7 +34,7 @@ const Home = () => {
         }
         return (<li key={i} id={i} className="display-list-item" onClick={handlePendingJob}>Pending Job for {job.date}</li>)
     })
-    const completedJobsLis = completedJobs.map((job, i)=><li key={i} id={i} onClick={handleCompletedJob}><span>{job.successful ? "Successful" : "Failed"} Job for {job.date}</span></li>)
+    const completedJobsLis = completedJobs.map((job, i)=>(<li className="display-list-item" key={i} id={i} onClick={handleCompletedJob}><span>{job.successful ? "Successful" : "Failed"} Job for {job.date}</span></li>))
     const teeTimes = completedJobs.map((job, i)=>{
         if(job.successful) return (
         <>
