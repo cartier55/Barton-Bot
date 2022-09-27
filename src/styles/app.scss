@@ -213,16 +213,16 @@ li.active{
 
 }
 button.btn.bot{
-  position: absolute;
-  top: 600px;
+  position: static;
+  // top: 600px;
   width: 137px;
-  right: 1454px;
+  // right: 816px;
 }
 button.btn.remove-bot{
-  position: absolute;
-  top: 512px;
+  position: static;
+  // top: 700px;
   width: 137px;
-  right: 1454px;
+  // right: 816px;
   background-color: red;
   border: red;
 }
