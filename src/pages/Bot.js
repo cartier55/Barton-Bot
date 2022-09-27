@@ -24,6 +24,7 @@ const Bot = () => {
         clubUsername: Yup.string().required('This field is required to login'),
         clubPassword: Yup.string().required('This field is required to login'),
         proxy: Yup.boolean(),
+        botStartDate: Yup.string(),
         botStartTime: Yup.string(),
     })
 
@@ -83,6 +84,7 @@ const Bot = () => {
                     clubUsername:selectedJob ? selectedJob.clubUsername : '',
                     clubPassword:'',
                     proxy:selectedJob ? selectedJob.proxy : false,
+                    botStartDate:selectedJob ? selectedJob.botStartDate : '',
                     botStartTime:selectedJob ? selectedJob.botStartTime : '',
                 }}
                 validationSchema={paramsSchema}
@@ -107,7 +109,20 @@ const Bot = () => {
                     return(
                     <Form className="form-center">
                         <div className="date-time-picker">
-                            <label className="form-block-label">Intended Date</label>
+                            <div class="bot-time-wrapper">
+                            {/* <div class="col"> */}
+
+                            <div className="bot-start-date">
+                                <label className="form-block-label">Bot Start Date</label>
+                                <DatePicker className={ errors.botStartDate && touched.botStartDate ? "form-control mt-1 error-input" : "form-control mt-1"} name="botStartDate" />
+                            </div>
+                            <div className="bot-start-time">
+                                <label className="form-block-label">Bot Start Time</label>
+                                <Field className={ errors.botStartTime && touched.botStartTime ? "form-control mt-1 error-input" : "form-control mt-1"} name="botStartTime"/>
+                            </div>
+                            {/* </div> */}
+                            </div>
+                            <label className="form-block-label">Tee Off Date</label>
                             <div class="form-group row">
                             <div class="col">
                             <DatePicker className={ errors.date && touched.date ? "form-control mt-1 error-input" : "form-control mt-1"} name="date" />
@@ -125,7 +140,7 @@ const Bot = () => {
                                 <div class="col-sm-10">
                                 {/* <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com"> */}
                                     {/* <Field className="form-control mt-1" as="select" name="startTime" > */}
-                                    <Field className={ errors.startTime && touched.startTime ? "form-control-plaintext error-input" : "form-control-plaintext"}   as="select" name="startTime">
+                                    <Field className={ errors.startTime && touched.startTime ? "form-control mt-1 error-input" : "form-control mt-1"}   as="select" name="startTime">
                                         <option value={"8:03 AM"}>8:03 AM</option>
                                         <option value={"8:12 AM"}>8:12 AM</option>
                                         <option value={"8:21 AM"}>8:21 AM</option>
@@ -200,7 +215,7 @@ const Bot = () => {
                                     </Field>
                                 {/* </div> */}
                                 {/* <div class="col-sm-10"> */}
-                                    <Field className={ errors.endTime && touched.endTime ? "form-control-plaintext error-input" : "form-control-plaintext"}  as="select" name="endTime" >
+                                    <Field className={ errors.endTime && touched.endTime ? "form-control mt-1 error-input" : "form-control mt-1"}  as="select" name="endTime" >
                                         <option value={"8:03 AM"}>8:03 AM</option>
                                         <option value={"8:12 AM"}>8:12 AM</option>
                                         <option value={"8:21 AM"}>8:21 AM</option>
@@ -273,7 +288,8 @@ const Bot = () => {
                                         <option value={"6:24 PM"}>6:24 PM</option>
                                         <option value={"6:33 PM"}>6:33 PM</option>
                                     </Field>
-                                <Field className={ errors.clubUsername && touched.clubUsername ? "form-control mt-1 error-input" : "form-control mt-1"} placeholder="Bot Start Time" name="botStartTime"/>
+
+                                
                                 </div>
                                 </div>
                             </div>

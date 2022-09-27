@@ -65,8 +65,11 @@ a{
   margin-top: 77px;
   margin-left: 3%;
   // padding: 5% 16% 0 16%;
-  position:relative;
-  width:100%;
+  flex-direction:column;
+  flex-grow: 1;
+  overflow-y: auto;
+  // position:relative;
+  // width:100%;
 }
 .jumbotron{
   width: 800px;
@@ -197,9 +200,21 @@ li.active{
 .wrapper{
   width: 800px;
 }
+.bot-time-wrapper{
+  width: 511px;
+}
+.bot-start-date{
+  width: 238px;
+  float: left;
+}
+.bot-start-time{
+  width: 238px;
+  float: right;
+
+}
 button.btn.bot{
   position: absolute;
-  top: 463px;
+  top: 600px;
   width: 137px;
   right: 1454px;
 }
