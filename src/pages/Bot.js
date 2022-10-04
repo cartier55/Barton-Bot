@@ -16,16 +16,19 @@ const Bot = () => {
     const {courseList, priorityList, msg, error, selectedJob} = useSelector(state => state.bot)
     const dispatch = useDispatch()
     const today = new Date()
+    const timeRegex = /^(0{0,1}[1-9]|1[012]):[0-5][0-9]\s(A|P)M/ig
+
     const paramsSchema = Yup.object({
-        date: Yup.date().required('Required').min(new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000)), "Date must be at least seven days ahead"),
+        // date: Yup.date().required('Required').min(new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000)), "Date must be at least seven days ahead"),
+        date: Yup.date().required('Required'),
         startTime: Yup.string().required('Required'),
         endTime: Yup.string().required('Required'),
         member: Yup.string(),
         clubUsername: Yup.string().required('This field is required to login'),
         clubPassword: Yup.string().required('This field is required to login'),
         proxy: Yup.boolean(),
-        botStartDate: Yup.string(),
-        botStartTime: Yup.string(),
+        botStartDate: Yup.string().nullable(),
+        botStartTime: Yup.string().trim().matches(timeRegex, 'Provide Valid Time In 12Hr AM/PM Format'),
     })
 
     const formStyle = {
@@ -67,7 +70,11 @@ const Bot = () => {
     const priorityLis = priorityList.map((course, i) => <li key={i} id={i} className="course" onClick={handleRemovePriority}>{course}</li>);
     const courseLis = courseList.map((course, i) => <li key={i} id={i} className="course" onClick={handleAddPriority}>{course}</li>);
 
+    const proxyBtn = proxyUrl ? (<Field type="checkbox" style={{marginTop:'13px',marginRight:'5px'}} name="proxy"/>) :(<Field disabled type="checkbox" style={{marginTop:'13px',marginRight:'5px'}} name="proxy"/>)
    
+    const showErr = (errs) =>{
+       return errs.map((err, i)=><div className="error-message">{err}</div>)
+    }
     return ( 
         <div className="main">
             <div>
@@ -84,7 +91,7 @@ const Bot = () => {
                     clubUsername:selectedJob ? selectedJob.clubUsername : '',
                     clubPassword:'',
                     proxy:selectedJob ? selectedJob.proxy : false,
-                    botStartDate:selectedJob ? selectedJob.botStartDate : '',
+                    botStartDate:selectedJob ? selectedJob.botStartDate ? new Date(selectedJob.botStartDate) : '' : '',
                     botStartTime:selectedJob ? selectedJob.botStartTime : '',
                 }}
                 validationSchema={paramsSchema}
@@ -114,11 +121,15 @@ const Bot = () => {
 
                             <div className="bot-start-date">
                                 <label className="form-block-label">Bot Start Date</label>
-                                <DatePicker className={ errors.botStartDate && touched.botStartDate ? "form-control mt-1 error-input" : "form-control mt-1"} name="botStartDate" />
+                                {/* <DatePicker className={ errors.botStartDate && touched.botStartDate ? "form-control mt-1 error-input" : "form-control mt-1"} name="botStartDate" /> */}
+                                <DatePicker className="form-control mt-1" name="botStartDate" />
                             </div>
                             <div className="bot-start-time">
                                 <label className="form-block-label">Bot Start Time</label>
                                 <Field className={ errors.botStartTime && touched.botStartTime ? "form-control mt-1 error-input" : "form-control mt-1"} name="botStartTime"/>
+                                {/* <Field className="form-control mt-1" name="botStartTime"/> */}
+                                {errors.botStartTime && touched.botStartTime ? <div className="error-message">{errors.botStartTime}</div> : null}
+
                             </div>
                             {/* </div> */}
                             </div>
@@ -129,6 +140,7 @@ const Bot = () => {
                             </div>
                             <div class="col">
                             {errors.date && touched.date ? <div className="error-message">{errors.date}</div> : null}
+                            {errors ? console.log(errors) : null}
                             </div>
 
                             </div>
@@ -298,13 +310,19 @@ const Bot = () => {
                                 <div className="member-details">
                                     <label className="form-block-label">Club Member Credentials</label>
                                     <Field className={ errors.clubUsername && touched.clubUsername ? "form-control mt-1 error-input" : "form-control mt-1"} placeholder="Username"  name="clubUsername" label="Username" />
-                                    <Field className={ errors.clubPassword && touched.clubPassword ? "form-control mt-1 error-input" : "form-control mt-1"} placeholder="Password" name="clubPassword" label="password" />
+                                    <Field className={ errors.clubPassword && touched.clubPassword ? "form-control mt-1 error-input" : "form-control mt-1"} placeholder="Password" name="clubPassword" type='password' label="password" />
                                     <label className="form-block-label">Member ID</label>
                                     <Field className="form-control mt-1" placeholder="Member" name="member" label="member" />
                                     <label>
-                                    <Field type="checkbox" style={{marginTop:'13px',marginRight:'5px'}} name="proxy"/>
+                                    {proxyBtn}
+                                    {/* {if(!proxy){
+                                        <Field disabled type="checkbox" style={{marginTop:'13px',marginRight:'5px'}} name="proxy"/>
+                                        
+                                    }else <Field type="checkbox" style={{marginTop:'13px',marginRight:'5px'}} name="proxy"/>} */}
                                     proxy enabled
                                     </label>
+                                    {msg && <div className="success-message" id="submit-success">{msg}</div>}
+                                    {error && <div className="error-message" id="submit-error">{error}</div>}
                                 </div>
                                 <div className="course-selection">
                                     <div className="course-list">
@@ -328,8 +346,8 @@ const Bot = () => {
                                     </div>
                                 </div>
                             </div>
-                            {msg && <div className="success-message" id="submit-success">{msg}</div>}
-                            {error && <div className="error-message" id="submit-error">{error}</div>}
+                            {/* {msg && <div className="success-message" id="submit-success">{msg}</div>} */}
+                            {/* {error && <div className="error-message" id="submit-error">{error}</div>} */}
                             <button className="btn btn-primary bot" type="submit">{selectedJob ? "Update Params" : "Set Params"}</button>
                             {selectedJob ? <button className="btn btn-primary remove-bot" onClick={(e)=>{handleDelete(e);resetForm({values:{date:'', startTime:'', endTime:'', member:'', clubUsername: '', clubPassword:''}})}} type="reset" >Delete Job</button> : null}
                             {/* {selectedJob ? <button className="btn btn-primary remove-bot" onClick={handleReset} type="reset" >Delete Job</button> : null} */}

@@ -3,6 +3,9 @@ import { SidebarHeader, SidebarFooter, SidebarContent } from 'react-pro-sidebar'
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { GiSettingsKnobs, GiMeshNetwork} from "react-icons/gi";
 import { StickyContainer, Sticky } from 'react-sticky';
+import gt from './logo_transparent_background_edit.png';
+// import gt from './logo_transparent_background.png';
+// import gt from './My project-1.png';
 
 import {FaGem, FaBattleNet, FaHammer, FaHome, FaGithub, FaSpider, FaRobot} from 'react-icons/fa';
 import Header from './Header';
@@ -74,14 +77,15 @@ const SideBar = (props) => {
                         }}
                         >
                         <a
-                            href="https://github.com/azouaoui-med/react-pro-sidebar"
+                            href="https://www.graytecknologies.com"
                             target="_blank"
                             className="sidebar-btn"
                             rel="noopener noreferrer"
                             >
-                            <FaGithub />
+                            {/* <FaGithub /> */}
+                            <img src={gt} alt="logo" />
                             <span style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
-                            View Source
+                            GrayTecknologies
                             </span>
                         </a>
                     </div>

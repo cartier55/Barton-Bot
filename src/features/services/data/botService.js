@@ -1,7 +1,7 @@
 import axiosInstance from "./protectedDataAxios"
 
-export const create = async (date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy) =>{
-    const resp = await axiosInstance.post('/bot/create', {date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy})
+export const create = async (date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy, botStartDate, botStartTime) =>{
+    const resp = await axiosInstance.post('/bot/create', {date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy, botStartDate, botStartTime})
     return resp.data
 
 }
@@ -12,8 +12,8 @@ export const getJobs = async () =>{
     
 }
 
-export const update = async (date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy, _id) =>{
-    const resp = await axiosInstance.put('/bot/update', {date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy, _id})
+export const update = async (date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy, botStartDate, botStartTime, _id) =>{
+    const resp = await axiosInstance.put('/bot/update', {date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy, botStartDate, botStartTime, _id})
     return resp.data
 
 }

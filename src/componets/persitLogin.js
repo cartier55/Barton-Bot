@@ -9,6 +9,8 @@ const PersitLogin = () => {
     
     useEffect(()=>{
         const verify = async () => {
+            console.log('refresh')
+            console.log(authDetails.accessToken)
             dispatch(refresh({}))
         }
         if(!authDetails?.accessToken) verify()

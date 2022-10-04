@@ -3,9 +3,9 @@ import { create, update, destroyPending } from '../services/data/botService';
 
 export const createPendingJob = createAsyncThunk(
     'bot/createJob',
-    async ({date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy}, thunkapi) => {
+    async ({date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy, botStartDate, botStartTime}, thunkapi) => {
         try {
-            const data = await create(date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy)
+            const data = await create(date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy, botStartDate, botStartTime)
             return data
         } catch (err) {
             console.log('error');
@@ -16,9 +16,9 @@ export const createPendingJob = createAsyncThunk(
 
 export const updatePendingJob = createAsyncThunk(
     'bot/updateJob',
-    async ({date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy, _id}, thunkapi) => {
+    async ({date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy, botStartDate, botStartTime, _id}, thunkapi) => {
         try {
-            const data = await update(date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy, _id)
+            const data = await update(date, startTime, endTime, clubUsername, clubPassword, member, priorityList, proxy, botStartDate, botStartTime, _id)
             return data
         } catch (err) {
             console.log(err);

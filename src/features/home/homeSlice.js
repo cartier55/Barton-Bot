@@ -20,7 +20,7 @@ export const deleteCompletedJob = createAsyncThunk(
     'home/destroyJob',
     async ({_id}, thunkapi) => {
         try {
-            // const data = await destroyCompleted(_id)
+            const data = await destroyCompleted(_id)
             // console.log(data);
             
             // return 
@@ -102,7 +102,7 @@ const initialState = {
             // console.log()
             state.status = 'success'
             state.pendingJobs = action.payload.pendingJobs.map(job=>job.date = {...job, date:formatDate(job.date)})
-            // state.completedJobs = action.payload.completedJobs.map(job=>job.date = {...job, date:formatDate(job.date)})
+            state.completedJobs = action.payload.completedJobs.map(job=>job.date = {...job, date:formatDate(job.date)})
         },
         [getAllJobs.rejected]:(state,action)=>{
             state.status = 'failed'

@@ -52,7 +52,7 @@ const SignUp = () => {
                             <Field className="form-control mt-1" placeholder="Username" name="username" label="Username" />
                             <label className="">Password</label>
                             {errors.password && touched.password ? <div className="error-message"s>{errors.password}</div> : null}
-                            <Field className="form-control mt-1" placeholder="Password" name="password"/>
+                            <Field className="form-control mt-1" placeholder="Password" type='password' name="password"/>
                             {signupError && (<p className="error-message" style={{marginTop:'35px'}}>{signupError}</p>)}
                             {msg && (<p className="success-message" style={{marginTop:'35px'}}>{msg}</p>)}
                             <button className="btn btn-primary" type="submit">Sign Up</button>
