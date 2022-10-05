@@ -42,6 +42,9 @@ const Home = () => {
         <hr/>
         </>
         )
+        else return(
+            <p style={{marginTop:"29px"}}>No Upcoming Tee Times</p>
+            )
     })
 
     // useEffect
@@ -90,7 +93,7 @@ const Home = () => {
                 <hr className="form-block-line"/>   
                 <div className="dashboard-list mt-1 scroll">
                     <ul className="display-list">
-                        {teeTimes.length ? teeTimes : <p style={{marginTop:"29px"}}>No Upcoming Tee Times</p>}
+                        {teeTimes}
                     </ul>
                 </div>
             </div>
