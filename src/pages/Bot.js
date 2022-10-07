@@ -11,7 +11,6 @@ import DatePicker from "../componets/DatePicker";
 
 
 const Bot = () => {
-    const test = false
     const {proxyUrl} = useSelector(state => state.proxy)
     const {courseList, priorityList, msg, error, selectedJob} = useSelector(state => state.bot)
     const dispatch = useDispatch()
@@ -20,7 +19,6 @@ const Bot = () => {
 
     const paramsSchema = Yup.object({
         date: Yup.date().required('Required').min(new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000)), "Date must be at least seven days ahead"),
-        // date: Yup.date().required('Required'),
         startTime: Yup.string().required('Required'),
         endTime: Yup.string().required('Required'),
         member: Yup.string(),
@@ -39,20 +37,7 @@ const Bot = () => {
     }, [])
     if(selectedJob) console.log(selectedJob)
     const [time, setTime] = useState(28980)
-    const [startTime, setStartTime] = useState('00:00')
-    const [endTime, setEndTime] = useState('00:00')
-    const handleTimeChange = (time) => {
-        console.log(time);
-        setTime(time)
-        
-    }
-    const handleStartTime = () =>{
-        setStartTime(intToHHMM(time))
-    }
-    
-    const handleEndTime = () =>{
-        setEndTime(intToHHMM(time))
-    }
+   
     const handleDelete = async (e) =>{
         e.preventDefault()
         await dispatch(deletePendingJob({_id:selectedJob._id}))
@@ -72,9 +57,7 @@ const Bot = () => {
 
     const proxyBtn = proxyUrl ? (<Field type="checkbox" style={{marginTop:'13px',marginRight:'5px'}} name="proxy"/>) :(<Field disabled type="checkbox" style={{marginTop:'13px',marginRight:'5px'}} name="proxy"/>)
    
-    const showErr = (errs) =>{
-       return errs.map((err, i)=><div className="error-message">{err}</div>)
-    }
+    
     return ( 
         <div className="main">
             <div>
@@ -95,21 +78,13 @@ const Bot = () => {
                     botStartTime:selectedJob ? selectedJob.botStartTime : '',
                 }}
                 validationSchema={paramsSchema}
-                // onSubmit send params to backend
-                // onSubmit={({pageName, postCount, loggedIn, username, password})=>dispatch(startBot({pageName, postCount, loggedIn, username, password}))}
-                // onSubmit={(values)=>console.log({...values, priorityList:priorityList})}
+    
                 onSubmit={(values)=>{
                     if(priorityList.length === 0) return window.alert('Priority List Is Required')
                     if(selectedJob) return dispatch((updatePendingJob({...values, priorityList:priorityList, _id:selectedJob._id})))
                     return dispatch(createPendingJob({...values, priorityList:priorityList}))}
 
                 }
-                // onReset={(values, {resetForm})=>resetForm(initialValues)}
-                // onReset={(values, resetForm) => {
-                //     resetForm()   
-              
-                // //     setSubmitting(false);
-                //   }}
                 
             >
                 {({values, errors, touched, resetForm})=>{
@@ -117,7 +92,6 @@ const Bot = () => {
                     <Form className="form-center">
                         <div className="date-time-picker">
                             <div class="bot-time-wrapper">
-                            {/* <div class="col"> */}
 
                             <div className="bot-start-date">
                                 <label className="form-block-label">Bot Start Date</label>
@@ -131,7 +105,6 @@ const Bot = () => {
                                 {errors.botStartTime && touched.botStartTime ? <div className="error-message">{errors.botStartTime}</div> : null}
 
                             </div>
-                            {/* </div> */}
                             </div>
                             <label className="form-block-label">Tee Off Date</label>
                             <div class="form-group row">
@@ -225,8 +198,6 @@ const Bot = () => {
                                         <option value={"6:24 PM"}>6:24 PM</option>
                                         <option value={"6:33 PM"}>6:33 PM</option>
                                     </Field>
-                                {/* </div> */}
-                                {/* <div class="col-sm-10"> */}
                                     <Field className={ errors.endTime && touched.endTime ? "form-control mt-1 error-input" : "form-control mt-1"}  as="select" name="endTime" >
                                         <option value={"8:03 AM"}>8:03 AM</option>
                                         <option value={"8:12 AM"}>8:12 AM</option>
@@ -315,10 +286,6 @@ const Bot = () => {
                                     <Field className="form-control mt-1" placeholder="Member" name="member" label="member" />
                                     <label>
                                     {proxyBtn}
-                                    {/* {if(!proxy){
-                                        <Field disabled type="checkbox" style={{marginTop:'13px',marginRight:'5px'}} name="proxy"/>
-                                        
-                                    }else <Field type="checkbox" style={{marginTop:'13px',marginRight:'5px'}} name="proxy"/>} */}
                                     proxy enabled
                                     </label>
                                     {msg && <div className="success-message" id="submit-success">{msg}</div>}
@@ -346,24 +313,15 @@ const Bot = () => {
                                     </div>
                                 </div>
                             </div>
-                            {/* {msg && <div className="success-message" id="submit-success">{msg}</div>} */}
-                            {/* {error && <div className="error-message" id="submit-error">{error}</div>} */}
                             <button className="btn btn-primary bot" type="submit">{selectedJob ? "Update Params" : "Set Params"}</button>
                             {selectedJob ? <button className="btn btn-primary remove-bot" onClick={(e)=>{handleDelete(e);resetForm({values:{date:'', startTime:'', endTime:'', member:'', clubUsername: '', clubPassword:''}})}} type="reset" >Delete Job</button> : null}
-                            {/* {selectedJob ? <button className="btn btn-primary remove-bot" onClick={handleReset} type="reset" >Delete Job</button> : null} */}
-
                         </Form>)
                 }
                 
             }
 
             </Formik>
-            {/* {selectedJob ? <button className="btn btn-primary remove-bot" onClick={handleDelete}>Delete Job</button> : null} */}
             </div>
-            {/* <TimePicker onChange={handleTimeChange} start="08:03" end="18:33" step={9} value={time}/>
-            <button onClick={handleStartTime}>Start Time</button>
-            <TimePicker onChange={handleTimeChange} start="08:03" end="18:33" step={9} value={time}/>
-        <button onClick={handleEndTime}>End Time</button> */}
             
 
         </div>
