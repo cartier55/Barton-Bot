@@ -3,19 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearJob, selectJob } from "../features/bot/botSlice";
 import { getAllJobs, deleteCompletedJob } from "../features/home/homeSlice";
-import { formatDate } from "../utils/convertTime";
 
 const Home = () => {
-    const authD = useSelector(state =>state.auth)
     const {pendingJobs, completedJobs} = useSelector(state => state.home)
     const {selectedJob} = useSelector(state => state.bot)
     const naviagate = useNavigate()
     const dispatch = useDispatch()
+
     useEffect(() => {
         dispatch(clearJob())
     }, [selectedJob])
-    const handleClearState = () =>{
-    }
+ 
     useEffect(() =>{
         dispatch(getAllJobs({}))
     }, [])
@@ -45,7 +43,6 @@ const Home = () => {
         
     })
     const isCompleted = (job) => job.successful
-    // useEffect
     return ( 
         <div className="main">
             <h1>HomePage</h1>
