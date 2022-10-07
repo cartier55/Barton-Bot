@@ -19,8 +19,8 @@ const Bot = () => {
     const timeRegex = /^(0{0,1}[1-9]|1[012]):[0-5][0-9]\s(A|P)M/ig
 
     const paramsSchema = Yup.object({
-        // date: Yup.date().required('Required').min(new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000)), "Date must be at least seven days ahead"),
-        date: Yup.date().required('Required'),
+        date: Yup.date().required('Required').min(new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000)), "Date must be at least seven days ahead"),
+        // date: Yup.date().required('Required'),
         startTime: Yup.string().required('Required'),
         endTime: Yup.string().required('Required'),
         member: Yup.string(),
