@@ -42,11 +42,9 @@ const Home = () => {
         <hr/>
         </>
         )
-        else return(
-            <p style={{marginTop:"29px"}}>No Upcoming Tee Times</p>
-            )
+        
     })
-
+    const isCompleted = (job) => job.successful
     // useEffect
     return ( 
         <div className="main">
@@ -93,7 +91,7 @@ const Home = () => {
                 <hr className="form-block-line"/>   
                 <div className="dashboard-list mt-1 scroll">
                     <ul className="display-list">
-                        {teeTimes}
+                        {teeTimes && completedJobs.some(isCompleted) ? teeTimes : <p style={{marginTop:"29px"}}>No Upcoming Tee Times</p>}
                     </ul>
                 </div>
             </div>
