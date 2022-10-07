@@ -67,22 +67,7 @@ export const refresh = createAsyncThunk(
     }
 )
 
-export const test = createAsyncThunk(
-    'auth/test',
-    async ({}, thunkapi)=>{
-        try {
-            const data = await index()
-            return data
-        } catch (err) {
-            if (err.response.data === "Invalid Access Token"){
-                return thunkapi.fulfillWithValue('loading')
-            }
-            console.log(err);
-            return thunkapi.rejectWithValue('Error testing')
-            
-        }
-    }
-)
+
 const initialState = {
    username: '',
    accessToken: '',
@@ -136,7 +121,6 @@ const initialState = {
             state.username = decode.username
             state.accessToken = action.payload.accessToken
             state.authenticated = true
-            // store.dispatch(setProxyParams(action.payload._doc.url, action.payload._doc.encryptedToken))
             
             
         },
@@ -178,22 +162,9 @@ const initialState = {
             state.status = 'failed'
             state.username = ""
             state.authenticated = false
-            // state.error = action.payload
+            state.error = action.payload
             
-        },
-        [test.pending]:(state,action)=>{
-            state.status = 'loading'
-            
-        },
-        [test.fulfilled]:(state,action)=>{
-            state.status = 'success'
-            state.res = action.payload
-        },
-        [test.rejected]:(state,action)=>{
-            state.status = 'failed'
-            // state.res = action.payload
-            
-        },
+        }
     }
 
   })

@@ -138,6 +138,5 @@ const initialState = {
 
   })
 
-// export const {setProxyParams, setUsername} = scrapeSlice.actions
 export const { reset, addCourse, removeCourse, selectJob, clearJob, clearMsgs } = botSlice.actions
 export default botSlice.reducer;
